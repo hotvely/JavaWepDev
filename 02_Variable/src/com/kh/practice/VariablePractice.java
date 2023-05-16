@@ -54,13 +54,16 @@ public class VariablePractice {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		method1();
-		method2();
-		method3();
-		method4();
+		
+		VariablePractice VP = new VariablePractice();
+		
+		VP.method1();
+		VP.method2();
+		VP.method3();
+		VP.method4();
 	}
 
-	public static void method1() {
+	public void method1() {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.printf("첫 번쨰 정수 입력 > ");
@@ -77,7 +80,7 @@ public class VariablePractice {
 		System.out.printf("나누기 결과 > 몫(%d) 나머지(%d)\n", calc.div(), calc.remain());
 	}
 
-	public static void method2() {
+	public void method2() {
 		int adultNum = 2;
 		int teenNum = 3;
 
@@ -90,7 +93,7 @@ public class VariablePractice {
 		System.out.printf("총 금액 : %d\n", totalPrice);
 	}
 
-	public static void method3() {
+	public void method3() {
 		int x = 5;
 		int y = 7;
 		int z = 9;
@@ -108,7 +111,7 @@ public class VariablePractice {
 		System.out.println("z = " + z);
 	}
 
-	public static void method4() {
+	public void method4() {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.printf("영어단어 입력 > ");
@@ -123,11 +126,11 @@ public class VariablePractice {
 	//
 	//
 	// function
-	public static int adultCalcPrice(int adultNum) {
+	public int adultCalcPrice(int adultNum) {
 		return 10000 * adultNum;
 	}
 
-	public static int teenCalcPrice(int teenNum) {
+	public int teenCalcPrice(int teenNum) {
 		return 7000 * teenNum;
 	}
 
