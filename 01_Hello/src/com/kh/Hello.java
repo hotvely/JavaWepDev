@@ -8,6 +8,7 @@
  * */
 
 package com.kh;
+import java.util.ArrayList;
 
 /*
  * 클래스(class)
