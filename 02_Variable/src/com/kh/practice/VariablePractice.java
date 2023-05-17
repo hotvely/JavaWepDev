@@ -1,6 +1,5 @@
 package com.kh.practice;
 
-import java.util.*;
 import java.util.Scanner;
 
 class Calculator {
