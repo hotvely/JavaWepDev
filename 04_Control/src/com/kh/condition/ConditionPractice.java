@@ -1,6 +1,6 @@
 package com.kh.condition;
 import java.util.*;
-
+import java.text.*;
 
 
 public class ConditionPractice {
@@ -9,16 +9,16 @@ public class ConditionPractice {
 
 	public static void main(String[] args) {
 		ConditionPractice cp = new ConditionPractice();
-//		cp.practice1();
-//		cp.practice2(10,2);
-//		cp.practice3();
-//		cp.practice4();		
-//		cp.practice5();
-//		cp.practice6();
-//		cp.practice7();
-//		cp.practice8();
-//		cp.practice9();
-//		cp.practice10();
+		cp.practice1();
+		cp.practice2(10,2);
+		cp.practice3();
+		cp.practice4();		
+		cp.practice5();
+		cp.practice6();
+		cp.practice7();
+		cp.practice8();
+		cp.practice9();
+		cp.practice10();
 		cp.practice11();
 	}
 	
@@ -168,7 +168,11 @@ public class ConditionPractice {
     	{
     		price *= 0.8f;
     	}
-    	System.out.println((int)price);
+    	
+    	DecimalFormat df = new DecimalFormat("###,###");
+    	String formatMoney = df.format(price);
+
+    	System.out.println(formatMoney);
     }
 
 
@@ -226,9 +230,9 @@ public class ConditionPractice {
     	String id = "happy";
     	String pass = "1234";
     	System.out.print("ID > ");
-    	String inputId = sc.nextLine();
+    	String inputId = sc.next();
     	System.out.print("PASS > ");
-    	String inputPass = sc.nextLine();
+    	String inputPass = sc.next();
     	
     	if(!id.equals(inputId))
     	{
@@ -448,35 +452,37 @@ public class ConditionPractice {
     	int assignmentScore = sc.nextInt();
     	
     	System.out.print("출석 회수 > ");
-    	int attendanceScore = sc.nextInt();
+    	int atsExchange = sc.nextInt();
     	
     	
     	float msExchange = (midScore * 0.2f);
     	float lsExchange = (lastScore * 0.3f);
     	float asExchange = (assignmentScore * 0.3f);
-    	float atsExchange = (attendanceScore * 0.2f);
     	
     	float total = (msExchange + lsExchange + asExchange + atsExchange);
     	System.out.println("===========결과==========");
     	
-    	
-    	if(attendanceScore < 20*0.7)
+    	// 굳이 맨마지막 처럼 뽑아야 하면 if문을 이중으로 넣어야 할 수 밖에 없는것 같아서 일단 짜긴 했는데..
+    	// 혹시나 조금 더 좋은 방법이나 가독성이나 최적화 방법이 있다면 조금 더 고민해 보겠습니다;
+	   	if(total < 70.0f || atsExchange < 20 *0.7f)
+    	{    		 
+	   		if(total < 70.0f)   
+	   			System.out.printf("FAIL [점수 미달] (총점 %.1f)\n", total);
+	   		
+	   		if(atsExchange < 20 *0.7f)
+	   			System.out.printf("FAIL [출석 횟수 부족] (%d/20)", atsExchange);
+      	}   
+	   	else
     	{
-    		System.out.printf("FAIL [출석 횟수 부족] (%d/20)", attendanceScore);
-		   	if(total  < 70.0)
-	    	{    		 
-	    		 System.out.printf("FAIL [점수 미달] (총점 %.1f)", total);
-	      	}    		
-		   	return;
+	    	System.out.printf("중간 고사 점수(20): %.1f\n",msExchange );
+	    	System.out.printf("기말 고사 점수(30): %.1f\n",lsExchange );
+	    	System.out.printf("과제 점수(30): %.1f\n", asExchange );
+	    	System.out.printf("출석 점수(20): %.1f\n", (float)atsExchange );
+	    	System.out.printf("총점 : %.1f\n",total );
+	    	System.out.print("PASS");
+	    	
     	}
- 
-    	System.out.printf("중간 고사 점수(20): %.1f\n",msExchange );
-    	System.out.printf("기말 고사 점수(30): %.1f\n",lsExchange );
-    	System.out.printf("과제 점수	 (30): %.1f\n",asExchange );
-    	System.out.printf("출석 점수	 (20): %.1f\n",atsExchange );
-    	System.out.printf("총점 			 : %.1f\n",total );
-    	System.out.print("PASS");
-    	
+
     	
     }
     
