@@ -1,6 +1,8 @@
 package com.kh;
 
 import java.util.*;
+import java.util.ArrayList;
+
 
 
 public class A_Variable
