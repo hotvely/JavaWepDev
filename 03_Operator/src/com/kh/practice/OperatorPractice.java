@@ -4,17 +4,18 @@ import java.util.*;
 
 public class OperatorPractice {
 
+	// 호출할때 마다 스캐너 객체를 호출하는것 같아서.. 정적변수로 빼봤어요..
 	static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		OperatorPractice OP = new OperatorPractice();
-		OP.method1();
-		OP.method2();
-		OP.method3();		
- 		OP.method4();
-		OP.method5();
-		OP.method6();
+		OperatorPractice op = new OperatorPractice();
+		op.method1();
+		op.method2();
+		System.out.println(op.method3());		
+		op.method4();
+		System.out.println(op.method5());
+		op.method6();
 	}
 
 	public void method1() {
@@ -42,18 +43,25 @@ public class OperatorPractice {
 
 	}
 
-	public void method3() {
+	public String method3() {
 		// 3개의 수를 키보드로 입력 받아 입력 받은 수가 모두 같으면 true, 아니면 false를 출력하세요.
 
+		//  -> 변수 3개를 만들면 메모리 할당이 늘어나서 그냥 하나로 줄이고 분기처리 하고
+		// return 키워드로 조건에 맞지 않으면 탈출해서 크진않지만 최적화 해봤어요
+		
+		int number;
 		System.out.printf("숫자1 >");
-		int number1 = sc.nextInt();
+		number = sc.nextInt();
+		
 		System.out.printf("숫자2 >");
-		int number2 = sc.nextInt();
+		if(number != sc.nextInt())
+			return "FALSE";
+		
 		System.out.printf("숫자3 >");
-		int number3 = sc.nextInt();
-
-		System.out.println((number1 != number2) ? false : (number2 != number3) ? false : true);
-
+		if(number != sc.nextInt())
+			return "FALSE";
+		
+		return "TRUE";
 	}
 
 	public void method4() {
@@ -66,13 +74,21 @@ public class OperatorPractice {
 
 	}
 
-	public void method5() {
+	public String method5() {
 //		나이를 키보드로 입력 받아 어린이(13세 이하)인지, 청소년(13세 초과 ~ 19세 이하)인지, 성인(19세초과)인지 출력하세요.
 
 		System.out.printf("나이 >");
 		int number = sc.nextInt();
-
-		System.out.println((number >= 19) ? "성인" : (number >= 13) ? "청소년" : "어린이");
+		
+		if(number >= 19)
+			return "성인";
+		else if(number >= 13)
+			return "청소년";
+		else
+			return "어린이";
+		
+		//삼항 연산자 사실 썩 좋아하진 않기도 하고... 수정했으면 하는 부분이 어떤지 정확하게 모르곘어서 그냥 분기 처리했습니다..ㅠ
+		//System.out.println((number >= 19) ? "성인" : (number >= 13) ? "청소년" : "어린이");
 
 	}
 
@@ -84,7 +100,9 @@ public class OperatorPractice {
 		System.out.printf("바구니크기 >");
 		int boxSize = sc.nextInt();
 		
-		System.out.printf("필요한 바구니의 수 > %d\n", (number%boxSize)>0 ? number/boxSize + 1 : number/boxSize);
+		// 코드 중복되는 부분이 있어서 가독성차원에서 변수하나 만들어서 수정했고.. 증감연산자 오늘 배워서 함 써봤습니다~
+		int boxCount = number/boxSize;
+		System.out.printf("필요한 바구니의 수 > %d\n", (number%boxSize)>0 ? ++boxCount : boxCount);
 
 	}
 }
