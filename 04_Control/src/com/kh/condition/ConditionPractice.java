@@ -9,16 +9,16 @@ public class ConditionPractice {
 
 	public static void main(String[] args) {
 		ConditionPractice cp = new ConditionPractice();
-		cp.practice1();
-		cp.practice2(10,2);
+//		cp.practice1();
+//		cp.practice2(10,2);
 		cp.practice3();
-		cp.practice4();		
+//		cp.practice4();		
 		cp.practice5();
-		cp.practice6();
-		cp.practice7();
-		cp.practice8();
-		cp.practice9();
-		cp.practice10();
+//		cp.practice6();
+//		cp.practice7();
+//		cp.practice8();
+//		cp.practice9();
+//		cp.practice10();
 		cp.practice11();
 	}
 	
@@ -88,10 +88,33 @@ public class ConditionPractice {
     	int piece = sc.nextInt();
     	System.out.print("사람 수 > ");
     	int person = sc.nextInt();
+
+//    	if(piece % person > 0)
+//    		System.out.println(person/piece + 1);
     	
-    	if(piece % person > 0)
-    		System.out.println(person/piece + 1);
+    	// 딱 떨어졌을 때! 만약 피자 조각 수가 4, 사람 수가 8! 요럴 때 어떨지 생각해보면 좋을 것 같아요~~
     	
+    	//------------------------------------------------------------
+    	// re)
+    	// -> 아.. 어떻게 출력 되어야 하는지 나오다 보니까 과정을 생각해서 짰어야 했는데 정답에 끼워 
+    	//		맞추는 형식으로 짠것 같아 뭔가 창피하네요 ㅋㅋㅋㅋㅋㅋㅋㅋ;;
+    	// 
+    	// 사람이 더 많아서 피자판수가 더 많이 필요한 경우와, 피자가 더 많아서 있는 판수만큼만 출력해 주면 되는
+    	// 부분으로 분기 나눠서 다시 처리 했습니다 ㅠㅠ
+    	// 그리고 말씀해 주셨듯이 나머지가 0인경우 즉, 딱 배수만큼 필요한 경우도
+    	// if문 안에서 분기처리 한번 더 해서 정리했습니다.
+    	if(person > piece)
+    	{
+    		if(person%piece != 0)
+    			System.out.println(person/piece + 1);
+    		else
+    			System.out.println(person/piece);
+    	}
+    	else
+    	{
+    		System.out.println((int)piece/person);
+    	}
+    	//---------------------------------------------------------------
     }
 
     /*
@@ -156,22 +179,25 @@ public class ConditionPractice {
     	int price = sc.nextInt();
     	int saleStandard = 100000; 
     	
-    	if(price < saleStandard * 3)
+    	if(price < saleStandard){
+    		//10만원 미만.
+    	}
+    	if(price < saleStandard * 3) // 요렇게 되면 30만원 이상이면 10%가 아닌 5%
     	{
+    		// 10만원 이상 ~ 30만원미만.    	
     		price *= 0.95f;
     	}
-    	else if(price < saleStandard * 5)
-    	{
+    	else if(price < saleStandard * 5) // 50만원 이상이면 10%  ----> 뭔가 빼먹었다는 거 보이시나요?
+    	{// 30만원 이상 ~ 50만원미만.
     		price *= 0.9f;
     	}
     	else
-    	{
+    	{// 50만원이상
     		price *= 0.8f;
     	}
     	
-    	DecimalFormat df = new DecimalFormat("###,###");
+    	DecimalFormat df = new DecimalFormat("###,###"); // 역시! 해보실 분들은 해보라고 해놓은거였어요 :)
     	String formatMoney = df.format(price);
-
     	System.out.println(formatMoney);
     }
 
@@ -463,7 +489,12 @@ public class ConditionPractice {
     	System.out.println("===========결과==========");
     	
     	// 굳이 맨마지막 처럼 뽑아야 하면 if문을 이중으로 넣어야 할 수 밖에 없는것 같아서 일단 짜긴 했는데..
-    	// 혹시나 조금 더 좋은 방법이나 가독성이나 최적화 방법이 있다면 조금 더 고민해 보겠습니다;
+    	// 혹시나 조금 더 좋은 방법이나 가독성이나 최적화 방법이 있다면 조금 더 고민해 보겠습니다;	
+    	
+    	// ---> 이 문제는 이게 정답! 사실 귀찮게 해놓은 문제에요 :) else if, else를 알게 되면 대부분 if문만 사용한 방식이 더 낫다는 걸 잊을 때도 있어서
+    	// 충분히 잘하셨습니다!
+    	
+    	// re) 어쩐지 출석이 부족해서 부족하다고 나오고 점수가 미달되도 표시가 되서 뭔가 찜찜해서 주석을 달았는데 답변 감사합니다.:)
 	   	if(total < 70.0f || atsExchange < 20 *0.7f)
     	{    		 
 	   		if(total < 70.0f)   
