@@ -179,6 +179,7 @@ public class ConditionPractice {
     	int price = sc.nextInt();
     	int saleStandard = 100000; 
     	
+    	// re 10만원 미만을 추가!
     	if(price < saleStandard){
     		//10만원 미만.
     	}

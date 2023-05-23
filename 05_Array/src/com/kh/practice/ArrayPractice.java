@@ -8,7 +8,7 @@ public class ArrayPractice {
 	public static void main(String[] args)
 	{
 		ArrayPractice ap = new ArrayPractice();
-		ap.method5();
+		ap.method4();
 	}
 	
 	/*
@@ -137,7 +137,7 @@ public class ArrayPractice {
 			{
 				tempPID[idx] = ch;
 			}
-			System.out.print(ch);
+			System.out.print(tempPID[idx]);
 			idx++;			
 		}
 		
