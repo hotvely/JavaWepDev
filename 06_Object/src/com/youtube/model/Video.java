@@ -1,4 +1,5 @@
 package com.youtube.model;
+
 import java.util.*;
 
 public class Video {
@@ -10,27 +11,38 @@ public class Video {
 	public String fileUrl;
 
 	/*
-	 * Create
-	 * Read
-	 * Update
-	 * Delete
+	 * Create Read Update Delete
 	 * 
-	 * */
-	
+	 */
+
 	// 영상 업로드
-	public void upLoad() {}
+	public Video upLoad() {
 	
+		return null;
+	}
+
 	// 영상 목록
-	public void videoList() {}
+	public Video[] videoList() {
 	
+		return null;
+	}
+
 	// 영상 재생
-	public void viewVideo() {}
-	
+	public Video viewVideo() {
+		
+		return null;		
+	}
+
 	// 영상 수정
-	public void updateVideo() {}
-	
+	public Video updateVideo() {
+		
+		return null;
+	}
+
 	// 영상 삭제
-	public void deleteVideo() {}
-	
-	
+	public boolean deleteVideo() {
+		
+		return false;
+	}
+
 }
