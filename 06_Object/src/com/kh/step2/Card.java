@@ -25,7 +25,29 @@ public class Card {
 	public static int width = 100;
 	public static int height = 250;
 	
-	
+	public static void main(String[] args) {
+		System.out.println(Card.width);
+		System.out.println(Card.height);
+		
+		System.out.println();
+		Card c1 = new Card();
+		c1.kind = "Heart";
+		c1.number = 7;
+		
+		Card c2 = new Card();
+		c2.kind = "Spade";
+		c2.number = 3;
+		
+		
+		c1.width = 50;
+		c1.height = 80;
+		
+		System.out.printf("첫번째 카드는 %s %d 두번째 카드는 %s %d\n", c1.kind, c1.number, c2.kind, c2.number);
+		System.out.printf("첫번쨰 카드 w(%d) h(%d) 두번째 카드 w(%d) h(%d)\n",c1.width, c1.height, c2.width, c2.height);
+
+		
+		
+	}
 	
 
 }
