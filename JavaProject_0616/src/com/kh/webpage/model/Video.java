@@ -17,6 +17,19 @@ public class Video {
 
 	}
 
+	// ------------------ 생성자
+	public Video() {}
+	
+	public Video(String title, float playTime, String fileUrl) {
+		super();
+		this.title = title;
+		this.playTime = playTime;
+		this.fileUrl = fileUrl;
+	}
+	// ------------------ 생성자
+
+	
+	
 	// 영상 목록
 	public void videoList() {
 		
