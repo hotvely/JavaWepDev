@@ -12,7 +12,7 @@ public class User {
 	private String name;
 	private Integer year, month, day;
 	private String nickName;
-	private char gender;
+	private Character gender;
 
 	public User() {}
 	

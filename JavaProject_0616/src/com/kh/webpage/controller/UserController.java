@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Reader;
+//import java.io.PrintWriter;
+//import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.*;
 
 import com.kh.webpage.model.User;
 
@@ -23,7 +23,8 @@ public class UserController {
 	
 	
 	public UserController() {		
-
+		obj = loadJson(".\\test.json");
+		
 	}
 	
 	/*
@@ -52,97 +53,73 @@ public class UserController {
 			, String email, String name, Integer year, Integer month, Integer day
 			, Character gender, String phone, String nickName) {
 		
-		if(obj != null)
+		
+		
+		// id 
+		if(this.obj != null && obj.containsValue(id))//json file에 내가 입력한 id가 있음?
 		{
-			// id 
-			if(obj.containsValue(id))//json file에 내가 입력한 id가 있음?
-				return;
+			System.out.println("같은 아이디가 존재함 !");
+			return;
+		}
+
 //			if(isExistInDB(this.user.getId(), "String"))		//<- T : String , true(중복)
 //				return;
-			this.user.setId(id);
-					
-			// pass
-			// - 비밀번호 입력 (특수문자(@, !) 포함해야 함.) // todo
-			if(!checkSW(password))
-				return;	
-			// - 비밀번호 확인
-			if(obj.containsKey(password))
-				return;
-			this.user.setPassword(password);
-			
-			// email
-			if(isExistInDB(this.user.getEmail(), "String"))		//<- T : String , true(중복)
-				return;
-			this.user.setEmail(email); 
-			
-			// name
-			this.user.setName(name);
+		this.user.setId(id);
+				
+		// pass
+		// - 비밀번호 입력 (특수문자(@, !) 포함해야 함.) 
+		if(!checkSW(password))
+			return;	
+		// - 비밀번호 확인
+		if(this.obj != null && obj.containsValue(password))
+			return;
+		this.user.setPassword(password);
 		
-			// birthday
-			this.user.setYear(year);
-			this.user.setMonth(month);
-			this.user.setDay(day);
+		// email
+		if(this.obj != null && obj.containsValue(email))		//<- T : String , true(중복)
 			
-			// gender
-			if(gender == null || gender != '남' || gender != '여')	
-				return;
-			this.user.setGender(gender);
-			
-			// phone
-			// - 핸드폰 버노 (KT, SKT, LG 통신사 선택.)
-			if(phone == null)
-				return;
-			
-			if(phone.length() > 11)
-			{
-				String temp = null;
-				for(char ch : phone.toCharArray())
-				{
-					if(ch != '-')
-						temp += ch;
-				}
-				phone = temp;
-			}
-			this.user.setPhone(phone);
-			
-			// nickName
-			if(isExistInDB(nickName, "String"))		//<- T : String , true(중복)
-				return;
-			this.user.setNickName(nickName);
-			saveFile(".\\test.json");
-		}
-		else
+			return;
+		this.user.setEmail(email); 
+		
+		// name
+		this.user.setName(name);
+	
+		// birthday
+		this.user.setYear(year);
+		this.user.setMonth(month);
+		this.user.setDay(day);
+		
+		// gender
+		if((gender == null) || (!gender.equals('m') && !gender.equals('f')))	
+			return;
+
+		this.user.setGender(gender);
+		
+		// phone
+		// - 핸드폰 버노 (KT, SKT, LG 통신사 선택.)
+		if(phone == null)
+			return;
+		
+		if(phone.length() > 11)
 		{
-			// 객체에 정보들 싹 집어 넣고;
-			this.user.setId(id);
-			if(!checkSW(password))
-				return;	
-			this.user.setPassword(password);
-			this.user.setEmail(email); 
-			this.user.setName(name);
-			this.user.setYear(year);
-			this.user.setMonth(month);
-			this.user.setDay(day);
-			if(gender == null || gender != '남' || gender != '여')	
-				return;
-			this.user.setGender(gender);
-			if(phone == null)
-				return;
-			
-			if(phone.length() > 11)
+			String temp = null;
+			for(char ch : phone.toCharArray())
 			{
-				String temp = null;
-				for(char ch : phone.toCharArray())
-				{
-					if(ch != '-')
-						temp += ch;
-				}
-				phone = temp;
+				if(ch != '-')
+					temp += ch;
 			}
-			this.user.setPhone(phone);
-			this.user.setNickName(nickName);
+			phone = temp;
 		}
-		saveFile(".\\test.json");
+		this.user.setPhone(phone);
+		
+		// nickName
+		if(this.obj != null && obj.containsValue(nickName))		//<- T : String , true(중복)
+			return;
+		this.user.setNickName(nickName);
+		
+		putJson(obj, this.user ,".\\test.json");
+	
+		
 	}
 
 	// 프로필 보기
@@ -241,7 +218,7 @@ public class UserController {
 		 try 
 		 {			
             // 1. 파일 객체 생성
-            File file = loadFile(".\\test.json");
+            File file = loadFile(path);
  
             // 2. 파일 존재여부 체크 및 생성
             if (!file.exists()) {
@@ -284,24 +261,22 @@ public class UserController {
 	
 	public JSONObject loadJson(String path)
 	{
+		JSONParser parser = new JSONParser();
 		try
 		{
-			JSONParser parser = new JSONParser();
-			 
+			if(obj == null)
+				return null;
 	        // JSON 파일 읽기
-	        Reader reader = new FileReader(path);
-	        if(reader != null)
-	        {
-	        	JSONObject jsonObject = (JSONObject)parser.parse(reader);
-		 
-		        String name = (String) jsonObject.get("name");
-		        long id = (Long) jsonObject.get("id");
-		        long price = (Long) jsonObject.get("price");
-	        }
-	      
+			Object obj = parser.parse(new FileReader(path));
+        	JSONObject jsonObject = (JSONObject)obj;
+//      	
+        	System.out.println(jsonObject);
+        	
+        	return jsonObject;
 		}
-		catch(IOException e)
+		catch(IOException | ParseException e)
 		{
+			System.out.println("변환에 실패 혹은 경로 못찾았음 ㅋㅋ ㅠ");
 			e.printStackTrace();
 		}
 		
