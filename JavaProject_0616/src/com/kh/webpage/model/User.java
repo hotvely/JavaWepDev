@@ -12,7 +12,7 @@ public class User {
 	private String name;
 	private Integer year, month, day;
 	private String nickName;
-	private Character gender;
+	private String gender;
 
 	public User() {}
 	
@@ -106,11 +106,11 @@ public class User {
 		this.nickName = nickName;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	// get set 

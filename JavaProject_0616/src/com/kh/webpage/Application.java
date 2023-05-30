@@ -58,7 +58,7 @@ public class Application {
 		String name = sc.nextLine();
 		
 		System.out.print("성별(남자면 m, 여자면 f) > ");
-		Character gender = sc.nextLine().charAt(0);
+		String gender =  Character.toString(sc.nextLine().charAt(0));
 		System.out.println(gender.equals('m'));
 		System.out.print("년 > ");		
 		Integer year = Integer.parseInt(sc.nextLine());

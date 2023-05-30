@@ -15,7 +15,7 @@ import org.json.simple.parser.*;
 import com.kh.webpage.model.User;
 
 
-public class UserController {
+	public class UserController {
 
 	User user = new User();
 	JSONObject obj = new JSONObject();
@@ -23,7 +23,7 @@ public class UserController {
 	
 	
 	public UserController() {		
-		obj = loadJson(".\\test.json");
+		loadJson(".\\test.json");
 		
 	}
 	
@@ -51,9 +51,9 @@ public class UserController {
 	// 회원가입
 	public void signUp (String id, String password, String passwordComp
 			, String email, String name, Integer year, Integer month, Integer day
-			, Character gender, String phone, String nickName) {
+			, String gender, String phone, String nickName) {
 		
-		
+		loadJson(".\\test.json");
 		
 		// id 
 		if(this.obj != null && obj.containsValue(id))//json file에 내가 입력한 id가 있음?
@@ -77,7 +77,6 @@ public class UserController {
 		
 		// email
 		if(this.obj != null && obj.containsValue(email))		//<- T : String , true(중복)
-			
 			return;
 		this.user.setEmail(email); 
 		
@@ -117,7 +116,7 @@ public class UserController {
 			return;
 		this.user.setNickName(nickName);
 		
-		putJson(obj, this.user ,".\\test.json");
+		putJson(obj, user, ".\\test.json");
 	
 		
 	}
@@ -173,25 +172,24 @@ public class UserController {
 		
 //		Json데이터 추가 하는 방법 블로그.
 //		https://hianna.tistory.com/627
+		
+		//임시 데이터 만들어서 저장하고;
+		JSONObject data = new JSONObject();
+		data.put("id",user.getId() /*json array*/);
+		data.put("password", user.getPassword());
+		data.put("name", user.getName());
+		data.put("gender", user.getGender());
+		data.put("email", user.getEmail());
+		data.put("phone", user.getPhone());
+		data.put("year", user.getYear());
+		data.put("month", user.getMonth());
+		data.put("day", user.getDay());
+		data.put("nickName", user.getNickName());
+
+		// 임시 데이터 배열화 한 이후에 클래스 인스턴스 obj 푸시
 		JSONArray jArr = new JSONArray();
-		JSONObject jObj = new JSONObject();
-		
-		
-		
-		jObj.put("id",user.getId() /*json array*/);
-		jObj.put("password", user.getPassword());
-		jObj.put("name", user.getName());
-		jObj.put("gender", user.getGender());
-		jObj.put("email", user.getEmail());
-		jObj.put("phone", user.getPhone());
-		jObj.put("year", user.getYear());
-		jObj.put("month", user.getMonth());
-		jObj.put("day", user.getDay());
-		jObj.put("nickName", user.getNickName());
-		
-		jArr.add(jObj);
+		jArr.add(data);
 		obj.put("data", jArr);
-		
 		
 		try 
 		{
@@ -205,109 +203,34 @@ public class UserController {
 		{
 			e.printStackTrace();
 		}
+		System.out.print(obj);
 		
 	}
 	
-	void getJson()
-	{
-		
-	}
-	
-	public void saveFile(String path)
-	{
-		 try 
-		 {			
-            // 1. 파일 객체 생성
-            File file = loadFile(path);
- 
-            // 2. 파일 존재여부 체크 및 생성
-            if (!file.exists()) {
-                file.createNewFile();
-            }
- 
-            // 3. Writer 생성
-//            FileWriter fw = new FileWriter(file, true);
-//            PrintWriter writer = new PrintWriter(fw, true);
- 
-            // 4. 파일에 쓰기 and json 만들어보기.
-            
-            // json
-            putJson(obj, this.user, path);
-            // text
-//            writer.printf("%s %s %s %c %s %s %s %s %s %s\n", 
-//            		this.user.getId(),
-//            		this.user.getPassword(),
-//            		this.user.getName(),
-//            		this.user.getGender(),
-//            		this.user.getEmail(), 
-//            		this.user.getPhone(),            		
-//            		String.valueOf(this. user.getYear()) ,
-//            		String.valueOf(this. user.getMonth()),
-//            		String.valueOf(this. user.getDay()),
-//            		this.user.getNickName()
-//            		);
-//            
-//            // 5. PrintWriter close
-//            writer.close();
-            
-            
-            System.out.println("회원가입성공");
-		 } 
-		 catch (IOException e) 
-		 {
-	            e.printStackTrace();
-		 }
-    }
-	
-	public JSONObject loadJson(String path)
+	public void loadJson(String path)
 	{
 		JSONParser parser = new JSONParser();
 		try
 		{
-			if(obj == null)
-				return null;
+
+			FileReader reader = new FileReader(path);
+
 	        // JSON 파일 읽기
-			Object obj = parser.parse(new FileReader(path));
+			Object obj = parser.parse(reader);
+			if(obj == null)
+				return;
+			
         	JSONObject jsonObject = (JSONObject)obj;
 //      	
         	System.out.println(jsonObject);
+        	reader.close();
         	
-        	return jsonObject;
+        	System.out.print(jsonObject);
 		}
 		catch(IOException | ParseException e)
 		{
 			System.out.println("변환에 실패 혹은 경로 못찾았음 ㅋㅋ ㅠ");
 			e.printStackTrace();
 		}
-		
-		
-		return null;
-	}
-	
-	public File loadFile(String path)
-	{
-		char str[] = new char[100];
-		try
-		{
-			File file = new File(path);
-			FileReader fileReader = new FileReader(file);
-			
-			int cnt;
-			while((cnt = fileReader.read(str)) != -1)
-			{
-				String data = new String(str, 0, cnt);
-				System.out.println(data);
-			}
-			
-			fileReader.close();	
-			return file;
-		}
-		catch(IOException e) 
-		{
-			e.printStackTrace();	
-			return null;
-		}
-		
-		
 	}
 }
