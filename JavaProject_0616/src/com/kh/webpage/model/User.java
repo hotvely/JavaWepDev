@@ -18,7 +18,7 @@ public class User {
 	
 	public User(String email, String phone, String id, 
 			String password, String name, Integer year, Integer month,
-			Integer day, String nickName, char gender) 
+			Integer day, String nickName, String gender) 
 	{
 		super();
 		this.email = email;

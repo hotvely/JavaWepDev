@@ -1,5 +1,6 @@
 package com.kh.polymorphism;
 
+import com.kh.polymorphism.controller.EmployeeController;
 import com.kh.polymorphism.model.child.*;
 import com.kh.polymorphism.model.parent.*;
 
@@ -45,6 +46,15 @@ public class Application {
 		
 		
 		System.out.println("----------------------------------------------------------------");
+		//이름으로 사람찾기
+		EmployeeController ec = new EmployeeController();
+
+		Employee find = ec.findEmployeeByName(empArr, "김영철");
+		System.out.println(find);
+		
+		System.out.printf("%s의 연봉 : %d\n", find.getName(), ec.getAnnualSalary(find));
+
+		System.out.printf("전체 사람들의 연봉 총합? > %d\n", ec.getTotalCoast(empArr));
 		
 		
 	}
