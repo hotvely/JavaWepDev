@@ -1,41 +1,30 @@
 package com.youtube.controller;
-
 import com.youtube.model.Video;
 
-public class VideoController {
+public class VideoController implements VideoControllerImpl {
 
-	/*
-	 * Create Read Update Delete
-	 * 
-	 */
-
-	// 영상 업로드
+	@Override
 	public Video upLoad() {
-	
 		return null;
 	}
 
-	// 영상 목록
+	@Override
 	public Video[] videoList() {
-	
 		return null;
 	}
 
-	// 영상 재생
+	@Override
 	public Video viewVideo() {
-		
-		return null;		
-	}
-
-	// 영상 수정
-	public Video updateVideo() {
-		
 		return null;
 	}
 
-	// 영상 삭제
+	@Override
+	public Video updateVideo() {
+		return null;
+	}
+
+	@Override
 	public boolean deleteVideo() {
-		
 		return false;
 	}
 
