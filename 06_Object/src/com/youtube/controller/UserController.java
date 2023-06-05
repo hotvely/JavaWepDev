@@ -1,21 +1,25 @@
 package com.youtube.controller;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.youtube.model.User;
 
 public class UserController implements UserControllerInterImpl {
 
+	User user = null;
+	
+	
 	@Override
-	public boolean logIn(String id, String password) {
+	public boolean login(String id, String password) {
+		// id pass 정도만 체크
+		if(user != null && user.getId().equals(id) && user.getPassword().endsWith(password))
+		{
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public User signUp(String id, String password, String email, String name, Integer year, Integer month, Integer day,
-			Character gender, String phone, String nickName) {
-		return null;
+	public void signUp(User user) {
+		// 
+		this.user = user;
 	}
 
 	@Override
@@ -24,18 +28,35 @@ public class UserController implements UserControllerInterImpl {
 	}
 
 	@Override
-	public User viewProfile() {
+	public User viewProfile() { //로그인 되어 있는 경우에만;
+		
+		if(login(user.getId(), user.getPassword()))
+		{
+			return user;
+		}
+		
 		return null;
 	}
 
 	@Override
 	public User updateProfile() {
-		return null;
+		
+		if(login(this.user.getId(), this.user.getPassword()))
+		{
+			this.user = user;
+		}
+		
+		return this.user;
 	}
 
 	@Override
-	public boolean deleteProfile() {
-		return false;
+	public void deleteProfile(String id) {
+		
+		if(user.getId().equals(id))
+		{
+			user = null;
+		}
+		
 	}
 
 	@Override
