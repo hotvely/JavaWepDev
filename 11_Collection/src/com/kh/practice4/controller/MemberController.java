@@ -48,7 +48,8 @@ public class MemberController {
 		 * 아이디가 존재하면서 저장된 비밀번호와 사용자가 입력한 비밀번호(oldPw)가
 		 * 같을 때 새로운 비밀번호로 바꾸고 true 반환, 아니라면 false 반환
 		 * */
-		if(map.containsKey(id) && map.get(id).getPassword().equals(oldPw))
+		if(map.containsKey(id) 
+				&& map.get(id).getPassword().equals(oldPw))
 		{
 			map.get(id).setPassword(newPw);
 			return true;

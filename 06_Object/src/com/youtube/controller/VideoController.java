@@ -2,35 +2,41 @@ package com.youtube.controller;
 import com.youtube.model.Video;
 import java.util.*;
 
-public class VideoController implements VideoControllerImpl {
+public class VideoController  {
 
-	Video videoList[] = new Video[10];
+//	Video videoList[] = new Video[10];
+	ArrayList<Video> videoList = new ArrayList<>();
 	
-	@Override
+	
 	public void upLoad(Video video) {
 		
-		videoList[0] = video;
+		videoList.add(video);
 		
 	}
 
-	@Override
-	public Video[] videoList() {
+	
+	public ArrayList<Video> videoList() {
 		
+		
+		return videoList;
 	}
 
-	@Override
-	public Video viewVideo(int index) {
-		return null;
+	
+	public Video viewVideo(int index) 
+	{
+		return videoList.get(index);
 	}
 
-	@Override
-	public Video updateVideo(int idx, Video video) {
+	
+	public Video updateVideo(int idx, Video video) 
+	{
 		return videoList.set(idx, video);	
 	}
 
-	@Override
-	public boolean deleteVideo() {
-		return false;
+	
+	public boolean deleteVideo(Video video)
+	{
+		return videoList.remove(video);
 	}
 
 }

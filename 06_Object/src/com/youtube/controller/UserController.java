@@ -1,7 +1,7 @@
 package com.youtube.controller;
 import com.youtube.model.User;
 
-public class UserController implements UserControllerInterImpl {
+public class UserController {
 
 	User user = null;
 	

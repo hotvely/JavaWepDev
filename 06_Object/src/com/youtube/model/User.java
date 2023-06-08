@@ -1,5 +1,6 @@
 package com.youtube.model;
 
+import java.util.*;
 
 public class User {
 		
@@ -12,7 +13,8 @@ public class User {
 	private String nickName;
 	private char gender;
 
-	private Video video;
+	private List<Video> videos;
+	
 	
 	public User() {}
 	

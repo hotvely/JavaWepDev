@@ -17,7 +17,7 @@ import com.kh.webpage.model.User;
 
 	public class UserController {
 
-	User user = new User();
+	User user = null;
 	JSONObject obj = new JSONObject();
 	
 	
@@ -135,7 +135,7 @@ import com.kh.webpage.model.User;
 
 	// 계정 삭제
 	public boolean deleteProfile() {
-
+		
 		return false;
 	}
 

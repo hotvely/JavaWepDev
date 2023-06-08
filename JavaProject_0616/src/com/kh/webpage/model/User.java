@@ -1,10 +1,10 @@
 package com.kh.webpage.model;
 
-
+import java.util.List;
 
 public class User {
 
-
+	private List<Video> videos;
 	private String email;
 	private String phone;
 	private String id;

@@ -81,8 +81,7 @@ public class Application {
 			}
 			else
 				System.out.println("중복된 아이디 입니다. 다시 입력해 주세요");
-			
-			System.out.println("-------------------------");
+						
 		}
 
 		

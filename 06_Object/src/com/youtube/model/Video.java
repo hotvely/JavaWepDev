@@ -4,35 +4,20 @@ import java.util.*;
 
 public class Video {
 	private String title;
-	private String comment;
 	private Date uploadAt;
 	private int views;
 	private String imgUrl;
 	private String fileUrl;
-
-	public Video(String title, String comment, Date uploadAt, 
-			int views, String imgUrl, String fileUrl) 
-	{
-		this.title = title;
-		this.comment = comment;
-		this.uploadAt = uploadAt;
-		this.views = views;
-		this.imgUrl = imgUrl;
-		this.fileUrl = fileUrl;
-	}
+	private String desc;
+	private char kind;		//shorts & video 둘중 하나
 	
-	
+	private List<Comment> comments;
+	private Category category;
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
 	}
 	public Date getUploadAt() {
 		return uploadAt;
@@ -58,11 +43,31 @@ public class Video {
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
 	}
-	
-	@Override
-	public String toString() {
-		return "Video [title=" + title + ", comment=" + comment + ", uploadAt=" + uploadAt + ", views=" + views
-				+ ", imgUrl=" + imgUrl + ", fileUrl=" + fileUrl + "]";
+	public String getDesc() {
+		return desc;
 	}
-
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public char getKind() {
+		return kind;
+	}
+	public void setKind(char kind) {
+		this.kind = kind;
+	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	
+	
 }
