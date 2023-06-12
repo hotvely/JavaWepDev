@@ -39,7 +39,7 @@ public class Application {
 	public int selectMenu() 
 	{
 
-		System.out.print("1.회원가입\n2.로그인\n3.프로필보기\n4.프로필수정\n5.계정삭제\n999.프로그램종료");
+		System.out.print("1.회원가입\n2.로그인\n3.게시판보기\n999.프로그램종료");
 		System.out.print("\n메뉴 번호 > ");
 		int menuNum = Integer.parseInt(sc.nextLine());
 	
@@ -76,7 +76,7 @@ public class Application {
 		String nickName = sc.nextLine();
 		
 		//컨트롤러를 이용해 객체에 데이터 할당해줌
-		uctr.signUp(id, password, password, email, name, year, month, day, gender, phone, nickName);
+		uctr.signUp(id, password, email, name, year, month, day, gender, phone, nickName);
 		
 	}
 	
@@ -89,6 +89,7 @@ public class Application {
 		if(uctr.logIn(id, password))	//성공
 		{
 			System.out.println("로그인 성공");
+			MemberMenu(uctr);
 		}
 		else	//실패
 		{
@@ -112,8 +113,7 @@ public class Application {
 				logIn(uctr);
 				break;
 			case 3:
-				
-				uctr.loadJson("src/test.json");
+				uctr.printAllUser();
 				break;
 			case 4:
 				break;
@@ -125,9 +125,37 @@ public class Application {
 				break;
 			}
 		}
-		
+	}
+	
+	public void MemberMenu(UserController uctr)
+	{
+		while(true)
+		{
+			//TODO 회원 전용 메뉴. 작성 요망.
+			System.out.print("1.로그아웃(이전페이지 돌아가기)\n2.마이페이지\n3.게시판보기\n");
+			System.out.print("\n메뉴 번호 > ");
+			int menuNum = Integer.parseInt(sc.nextLine());
+
+			switch(menuNum)
+			{
+			case 1:
+				uctr.setUser(null);
+				return;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			default:
+				break;
+			
+			}
+			
+		}
 		
 	}
+	
 	
 	
 

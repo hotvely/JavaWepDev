@@ -1,8 +1,11 @@
 package com.kh.webpage.model;
 
+import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
-public class User {
+public class User implements Serializable , Comparable<User>{
 
 	private List<Video> videos;
 	private String email;
@@ -114,6 +117,42 @@ public class User {
 		this.gender = gender;
 	}
 	// get set 
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(day, email, gender, id, month, name, nickName, password, phone, videos, year);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(day, other.day) && Objects.equals(email, other.email)
+				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
+				&& Objects.equals(month, other.month) && Objects.equals(name, other.name)
+				&& Objects.equals(nickName, other.nickName) && Objects.equals(password, other.password)
+				&& Objects.equals(phone, other.phone) && Objects.equals(videos, other.videos)
+				&& Objects.equals(year, other.year);
+	}
+
+	@Override
+	public String toString() {
+		return "User [videos=" + videos + ", email=" + email + ", phone=" + phone + ", id=" + id + ", password="
+				+ password + ", name=" + name + ", year=" + year + ", month=" + month + ", day=" + day + ", nickName="
+				+ nickName + ", gender=" + gender + "]";
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return this.name.compareTo(o.getName());
+	}
+
+
 	
 	
 	
