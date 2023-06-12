@@ -20,7 +20,7 @@ public class A_Match {
 	public static void main(String[] args)
 	{
 		A_Match a = new A_Match();
-		a.method2();
+		a.method3();
 		
 		
 		
@@ -61,6 +61,12 @@ public class A_Match {
 				.anyMatch(value -> value <= 65);
 		
 		System.out.println(result);
+	}
+	
+	public void method3()
+	{
+
+		
 	}
 	
 	

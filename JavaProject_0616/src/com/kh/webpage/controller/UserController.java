@@ -1,16 +1,13 @@
 package com.kh.webpage.controller;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-//import java.io.PrintWriter;
-//import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.io.*;
+
+
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
+
 
 import com.kh.webpage.model.User;
 
@@ -19,14 +16,10 @@ import com.kh.webpage.model.User;
 
 	User user = null;
 	JSONObject obj = new JSONObject();
+	HashMap<Object, User> users = new HashMap<>();
 	
 	
-	
-	public UserController() {		
-		loadJson(".\\test.json");
-		
-	}
-	
+	public UserController() {}
 	/*
 	 * 
 	 * 
@@ -53,7 +46,7 @@ import com.kh.webpage.model.User;
 			, String email, String name, Integer year, Integer month, Integer day
 			, String gender, String phone, String nickName) {
 		
-		loadJson(".\\test.json");
+		//loadJson("./src/test.json");
 		
 		// id 
 		if(this.obj != null && obj.containsValue(id))//json file에 내가 입력한 id가 있음?
@@ -61,7 +54,8 @@ import com.kh.webpage.model.User;
 			System.out.println("같은 아이디가 존재함 !");
 			return;
 		}
-
+		
+		this.user =  new User();
 //			if(isExistInDB(this.user.getId(), "String"))		//<- T : String , true(중복)
 //				return;
 		this.user.setId(id);
@@ -89,7 +83,7 @@ import com.kh.webpage.model.User;
 		this.user.setDay(day);
 		
 		// gender
-		if((gender == null) || (!gender.equals('m') && !gender.equals('f')))	
+		if((gender == null) || (!gender.equals("m") && !gender.equals("f")))	
 			return;
 
 		this.user.setGender(gender);
@@ -116,14 +110,21 @@ import com.kh.webpage.model.User;
 			return;
 		this.user.setNickName(nickName);
 		
-		putJson(obj, user, ".\\test.json");
+		putJson(obj, user, "src/test.json");
 	
 		
 	}
 
+	public void printAllUser()
+	{
+		loadJson("src/test.json");
+		
+	}
+	
 	// 프로필 보기
 	public User viewProfile() {
 	
+		
 		return null;
 	}
 
@@ -174,28 +175,28 @@ import com.kh.webpage.model.User;
 //		https://hianna.tistory.com/627
 		
 		//임시 데이터 만들어서 저장하고;
-		JSONObject data = new JSONObject();
-		data.put("id",user.getId() /*json array*/);
-		data.put("password", user.getPassword());
-		data.put("name", user.getName());
-		data.put("gender", user.getGender());
-		data.put("email", user.getEmail());
-		data.put("phone", user.getPhone());
-		data.put("year", user.getYear());
-		data.put("month", user.getMonth());
-		data.put("day", user.getDay());
-		data.put("nickName", user.getNickName());
-
-		// 임시 데이터 배열화 한 이후에 클래스 인스턴스 obj 푸시
-		JSONArray jArr = new JSONArray();
-		jArr.add(data);
-		obj.put("data", jArr);
+//		JSONObject data = new JSONObject();
+//		data.put("id",user.getId() /*json array*/);
+//		data.put("password", user.getPassword());
+//		data.put("name", user.getName());
+//		data.put("gender", user.getGender());
+//		data.put("email", user.getEmail());
+//		data.put("phone", user.getPhone());
+//		data.put("year", user.getYear());
+//		data.put("month", user.getMonth());
+//		data.put("day", user.getDay());
+//		data.put("nickName", user.getNickName());
+//		data.put(user.getId(), user);
+//
+//		// 임시 데이터 배열화 한 이후에 클래스 인스턴스 obj 푸시
+//		JSONArray jArr = new JSONArray();
+//		jArr.add(data);
+		obj.put(user.getId(), user);
 		
-		try 
+		try (FileWriter file  = new FileWriter(path, true))
 		{
 			//
-			FileWriter file  = new FileWriter(path);
-			file.write(obj.toJSONString());
+			file.write(obj.toJSONString() + "\n");
 			file.flush();
 			file.close();
 		}
@@ -210,22 +211,35 @@ import com.kh.webpage.model.User;
 	public void loadJson(String path)
 	{
 		JSONParser parser = new JSONParser();
-		try
+		try(BufferedReader reader = new BufferedReader(new FileReader(path)))
 		{
-
-			FileReader reader = new FileReader(path);
-
 	        // JSON 파일 읽기
-			Object obj = parser.parse(reader);
-			if(obj == null)
-				return;
-			
-        	JSONObject jsonObject = (JSONObject)obj;
-//      	
-        	System.out.println(jsonObject);
-        	reader.close();
-        	
-        	System.out.print(jsonObject);
+			StringBuilder jsonStr = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) 
+            {
+                jsonStr.append(line);
+            }
+			// JSON 문자열 파싱
+            JSONObject jsonObject = (JSONObject) parser.parse(jsonStr.toString());
+            if(jsonObject == null)
+            {
+            	System.out.println("데이터가 없어 ㅠㅠ");
+            	return;
+            }
+            
+            // 데이터를 HashMap에 저장
+            users = new HashMap<>(jsonObject);
+            
+            // 데이터 확인
+            for (HashMap.Entry<Object, User> entry : users.entrySet()) 
+            {
+                Object key = entry.getKey();
+                System.out.println(key);
+                User value = (User)entry.getValue();
+                System.out.println(value);
+                System.out.println(key + ": " + value);
+            }
 		}
 		catch(IOException | ParseException e)
 		{

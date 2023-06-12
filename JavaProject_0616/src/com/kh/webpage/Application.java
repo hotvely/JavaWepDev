@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Application {
 	
-		static Scanner sc = new Scanner(System.in);
+	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
@@ -58,8 +58,7 @@ public class Application {
 		String name = sc.nextLine();
 		
 		System.out.print("성별(남자면 m, 여자면 f) > ");
-		String gender =  Character.toString(sc.nextLine().charAt(0));
-		System.out.println(gender.equals('m'));
+		String gender =  sc.nextLine();
 		System.out.print("년 > ");		
 		Integer year = Integer.parseInt(sc.nextLine());
 		System.out.print("월 > ");		
@@ -113,6 +112,8 @@ public class Application {
 				logIn(uctr);
 				break;
 			case 3:
+				
+				uctr.loadJson("src/test.json");
 				break;
 			case 4:
 				break;
