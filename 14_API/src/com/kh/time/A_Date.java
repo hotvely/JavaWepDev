@@ -1,5 +1,6 @@
 package com.kh.time;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -10,7 +11,7 @@ public class A_Date {
 	{
 		A_Date a = new A_Date();
 //		a.method3();
-		a.practice();
+		a.practice2();
 	}
 	
 	/*
@@ -156,6 +157,7 @@ public class A_Date {
 						System.out.println("태어난 달,날 지대로 ㄱㄱ");
 						continue;
 					}
+					
 				}
 			}
 			
@@ -255,7 +257,39 @@ public class A_Date {
 	}
 	
 	
-	
+	public void practice2()
+	{
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf  = new SimpleDateFormat("yyMMdd");
+		
+		Date result = null;
+		while(true)
+		{
+			System.out.print("주민번호 앞 6자리를 입력해주세용 > ");
+			String data = sc.nextLine();
+			
+			try 
+			{
+				result = sdf.parse(data);
+				break;
+			} 
+			catch (ParseException e) {}
+		}
+		
+		Calendar inputDate = Calendar.getInstance();
+		Calendar today = Calendar.getInstance();
+		
+		inputDate.setTime(result);
+		
+		
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy년 MM월 dd일은 (E)요일 입니다.");
+		System.out.println(sdf2.format(result));
+		
+		long day = (today.getTimeInMillis() - inputDate.getTimeInMillis()) / (1000 * 60 * 60 * 24);
+		System.out.println("태어난 날 부터 지금까지 " + day + "일 지났습니다~");
+		
+		
+	}
 	
 	
 	
