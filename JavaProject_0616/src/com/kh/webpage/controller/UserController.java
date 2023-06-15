@@ -3,18 +3,24 @@ package com.kh.webpage.controller;
 import java.util.*;
 import java.util.stream.Stream;
 import java.io.*;
-
-
+import java.time.LocalDate;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
 import com.kh.webpage.model.User;
 
+	enum CheckList
+	{
+		EMAIL,
+		NICKNAME,
+		
+	}
 
 	public class UserController {
 
 	private User user = null;
+	
 	public User getUser()
 	{
 		return this.user;
@@ -23,19 +29,28 @@ import com.kh.webpage.model.User;
 	{
 		this.user = user;
 	}
-//	JSONObject obj = new JSONObject();
-	HashMap<String, User> users = new HashMap<>();
-//	List<User> users = new ArrayList<>();
+
+	public User findUser(String id)
+	{
+		return users.get(id);
+	}
+	
+	
+	HashMap<String, User> users = null;
+	List<String> userIdArr = null;
+	ObjectOutputStream oos = null;
 	String fileName = "src/users.obj";
+	
+	
+	
 	
 	public UserController() {
 		users = fileRead();
+		if(users != null || !users.isEmpty())
+		{
+			userIdArr = new ArrayList<>(users.keySet());		
+		}
 	}
-	/*
-	 * 
-	 * 
-	 * FileOutputStream		<- 이미지 파일, row byte
-	 * */
 	
 	// 로그인
 	public boolean logIn(String id, String password) {
@@ -49,24 +64,54 @@ import com.kh.webpage.model.User;
 		return false;
 	}
 
+	///존재하면 true , 없으면 false;
+	public boolean isExistOBJ(Object obj, CheckList check)
+	{
+
+		switch(check)
+		{
+		case EMAIL:			
+			for(String id : userIdArr)
+			{
+				if(users.get(id).getEmail().equals(obj))
+				{
+					//같은 이메일이 존재 하는데?????
+					return true;
+				}
+			}			
+			break;
+		case NICKNAME:
+			for(String id : userIdArr)
+			{
+				if(users.get(id).getNickName().equals(obj))
+				{
+					//같은 닉네임이 존재 하는데?????
+					return true;
+				}
+			}	
+			break;
+		}
+		
+		return false;
+	}
+	
 	// 회원가입
 	public void signUp (String id, String password, String email
-			, String name, Integer year, Integer month, Integer day
+			, String name, LocalDate birthday
 			, String gender, String phone, String nickName) {
 		
-		//loadJson("./src/test.json");
+		if(users == null || users.isEmpty())
+			
 		
 		
 		// id 
-		if(users.containsKey(id))//user 데이터 정보들에 내가 입력한 id가 있음?
+		if(!users.isEmpty() && users.containsKey(id))//user 데이터 정보들에 내가 입력한 id가 있음?
 		{
 			System.out.println("같은 아이디가 존재함 !");
 			return;
 		}
 		
-		this.user =  new User();
-//			if(isExistInDB(this.user.getId(), "String"))		//<- T : String , true(중복)
-//				return;
+		this.user = new User();
 		this.user.setId(id);
 				
 		// pass
@@ -77,17 +122,19 @@ import com.kh.webpage.model.User;
 		
 		
 		// email
-		if(users.containsValue(email))		//<- T : String , true(중복)
+		// 맵핑한 데이터가 있는상태이면서, 
+		if(!users.isEmpty() && isExistOBJ(email, CheckList.EMAIL))	
+		{
+			System.out.println("같은 이메일 있는딩?>");
 			return;
+		}
 		this.user.setEmail(email); 
 		
 		// name
 		this.user.setName(name);
 	
 		// birthday
-		this.user.setYear(year);
-		this.user.setMonth(month);
-		this.user.setDay(day);
+		this.user.setBirthday(birthday);
 		
 		// gender
 		if((gender == null) || (!gender.equals("m") && !gender.equals("f")))	
@@ -97,27 +144,20 @@ import com.kh.webpage.model.User;
 		
 		// phone
 		// - 핸드폰 버노 (KT, SKT, LG 통신사 선택.)
-		if(phone == null)
-			return;
-//		
-//		if(phone.length() > 11)
-//		{
-//			String temp = null;
-//			for(char ch : phone.toCharArray())
-//			{
-//				if(ch != '-')
-//					temp += ch;
-//			}
-//			phone = temp;
-//		}
+		if(phone == null || !phone.contains("-") || phone.length() != 13)
+			return;		
 		this.user.setPhone(phone);
 		
 		// nickName
-		if(users.containsValue(nickName))		//<- T : String , true(중복)
+		if(!users.isEmpty() && isExistOBJ(nickName, CheckList.NICKNAME))
+		{
+			System.out.println("같은 닉네임 존재하넹ㅎㅎ;");
 			return;
+		}		
 		this.user.setNickName(nickName);
 		
-		//putJson(obj, user, "src/test.json");
+		
+		
 		fileSave(this.user);
 		
 	}
@@ -125,12 +165,7 @@ import com.kh.webpage.model.User;
 	public void printAllUser()
 	{
 		users = fileRead();
-//		List<User> value = new ArrayList<>(users.values());
-//		value.sort(User::compareTo);
-//		for(User elem : value)
-//		{
-//			System.out.println(elem);
-//		}
+
 		for(var key : users.keySet())
 		{
 			System.out.println(users.get(key));
@@ -145,9 +180,27 @@ import com.kh.webpage.model.User;
 	}
 
 	// 프로필 수정
-	public User updateProfile() {
+	public void updateProfile(int menuNum) {
+		switch(menuNum)
+		{
+		case 1:
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+		case 99:
+			
+			break;			
+		}
 		
-		return null;
+		
 	}
 
 	// 계정 삭제
@@ -187,7 +240,7 @@ import com.kh.webpage.model.User;
 
 	public void fileSave(User user) 
 	{	
-		ObjectOutputStream oos = null;
+		
 		
 		try
 		{
@@ -265,45 +318,5 @@ import com.kh.webpage.model.User;
 		return hMap;
 	}
 
-	/*
-		public void loadJson(String path)
-		{
-			JSONParser parser = new JSONParser();
-			try(BufferedReader reader = new BufferedReader(new FileReader(path)))
-			{
-		        // JSON 파일 읽기
-				StringBuilder jsonStr = new StringBuilder();
-	            String line;
-	            while ((line = reader.readLine()) != null) 
-	            {
-	                jsonStr.append(line);
-	            }
-				// JSON 문자열 파싱
-	            JSONObject jsonObject = (JSONObject) parser.parse(jsonStr.toString());
-	            if(jsonObject == null)
-	            {
-	            	System.out.println("데이터가 없어 ㅠㅠ");
-	            	return;
-	            }
-	            
-	            // 데이터를 HashMap에 저장
-	            users = new HashMap<>(jsonObject);
-	            
-	            // 데이터 확인
-	            for (HashMap.Entry<Object, User> entry : users.entrySet()) 
-	            {
-	                Object key = entry.getKey();
-	                System.out.println(key);
-	                User value = (User)entry.getValue();
-	                System.out.println(value);
-	                System.out.println(key + ": " + value);
-	            }
-			}
-			catch(IOException | ParseException e)
-			{
-				System.out.println("변환에 실패 혹은 경로 못찾았음 ㅋㅋ ㅠ");
-				e.printStackTrace();
-			}
-		}
-	*/
+
 }
