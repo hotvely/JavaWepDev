@@ -4,7 +4,9 @@ import com.kh.webpage.model.*;
 import com.kh.webpage.controller.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
 
 public class Application {
 	
@@ -55,7 +57,7 @@ public class Application {
 		System.out.print("id > ");
 		String id = sc.nextLine();
 		
-		System.out.print("pass > ");
+		System.out.print("pass(@,! 포함되어야 합니다) > ");
 		String password = sc.nextLine();
 		
 		System.out.print("이름 > ");
@@ -65,7 +67,8 @@ public class Application {
 		String gender =  sc.nextLine();
 		System.out.print("생년월일 (ex) 1900년-01월-01일 > ");		
 		String birthday = sc.nextLine();
-		LocalDate birthDate = LocalDate.parse(birthday);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+		LocalDate birthDate = LocalDate.parse(birthday, formatter);
 		
 		System.out.print("핸드폰 (ex) 010-0000-0000 > ");
 		String phone = sc.nextLine();
@@ -116,11 +119,6 @@ public class Application {
 			case 3:
 				uctr.printAllUser();
 				break;
-			case 4:
-				
-				break;
-			case 5: 
-				break;
 			case 999:
 				return;
 			default:
@@ -145,6 +143,10 @@ public class Application {
 				return;
 			case 2:
 				myPage();
+				if(uctr.getUser() == null)
+				{
+					return;
+				}
 				break;
 			case 3:
 				noteMenu();
@@ -173,7 +175,7 @@ public class Application {
 				updateUserInfo();
 				break;
 			case 3:
-				
+				uctr.deleteProfile();
 				break;
 			case 99:
 				return;
@@ -231,6 +233,8 @@ public class Application {
 		System.out.print("쪽지를 받을 사람 > ");
 		String recipient =  sc.nextLine();		
 		nctr.addNote(uctr.getUser(), uctr.findUser(recipient));
+		
+		
 		
 	}
 	

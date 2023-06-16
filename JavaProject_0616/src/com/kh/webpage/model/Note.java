@@ -1,8 +1,9 @@
 package com.kh.webpage.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Note {
+public class Note implements Serializable{
 
 	private String note;	
 	private User writer;

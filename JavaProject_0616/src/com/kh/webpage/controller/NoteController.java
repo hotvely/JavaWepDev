@@ -12,7 +12,7 @@ public class NoteController {
 	Scanner sc = new Scanner(System.in);
 
 	UserController uc = new UserController();
-	List<Note> notes = null;
+	List<Note> notes = new ArrayList<>();
 	User writerUser = null;
 	
 	//C	 : 쪽지 작성	-> 로그인 된 회원만 가능!

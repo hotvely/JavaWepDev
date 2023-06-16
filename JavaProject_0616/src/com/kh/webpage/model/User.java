@@ -25,7 +25,7 @@ public class User implements Serializable , Comparable<User>{
 	public User() {}
 	
 	public User(String id, String password, String name, String phone, String nickName,
-			String email, LocalDate birthday, Integer year, Integer month, Integer day, String gender) {
+			String email, LocalDate birthday, String gender) {
 
 		this.id = id;
 		this.password = password;

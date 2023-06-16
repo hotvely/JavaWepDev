@@ -12,13 +12,18 @@ import com.kh.webpage.model.User;
 
 	enum CheckList
 	{
+		NONE,
 		EMAIL,
 		NICKNAME,
+		PHONE,
 		
+		
+		END,
 	}
 
 	public class UserController {
 
+	Scanner sc = new Scanner(System.in);
 	private User user = null;
 	
 	public User getUser()
@@ -65,11 +70,14 @@ import com.kh.webpage.model.User;
 	}
 
 	///존재하면 true , 없으면 false;
-	public boolean isExistOBJ(Object obj, CheckList check)
+	public boolean duplicationOBJCheck(Object obj, CheckList check)
 	{
 
 		switch(check)
 		{
+		case NONE:
+			System.out.println("어.. 유저 정보 checkList 데이터 잘못 넣은거 같은데??");
+			break;
 		case EMAIL:			
 			for(String id : userIdArr)
 			{
@@ -90,6 +98,19 @@ import com.kh.webpage.model.User;
 				}
 			}	
 			break;
+		case PHONE:
+			for(String id : userIdArr)
+			{
+				if(users.get(id).getPhone().equals(obj))
+				{
+					//같은 핸드폰이 존재 하는데?????
+					return true;
+				}
+			}	
+			break;
+		case END:
+			break;
+			
 		}
 		
 		return false;
@@ -123,7 +144,7 @@ import com.kh.webpage.model.User;
 		
 		// email
 		// 맵핑한 데이터가 있는상태이면서, 
-		if(!users.isEmpty() && isExistOBJ(email, CheckList.EMAIL))	
+		if(!users.isEmpty() && duplicationOBJCheck(email, CheckList.EMAIL))	
 		{
 			System.out.println("같은 이메일 있는딩?>");
 			return;
@@ -144,12 +165,15 @@ import com.kh.webpage.model.User;
 		
 		// phone
 		// - 핸드폰 버노 (KT, SKT, LG 통신사 선택.)
-		if(phone == null || !phone.contains("-") || phone.length() != 13)
+		if(phone == null || !phone.contains("-") || phone.length() != 13 || duplicationOBJCheck(phone, CheckList.PHONE))
+		{
+			System.out.println("같은 핸드폰 존재하넹ㅎㅎ;");
 			return;		
+		}
 		this.user.setPhone(phone);
 		
 		// nickName
-		if(!users.isEmpty() && isExistOBJ(nickName, CheckList.NICKNAME))
+		if(!users.isEmpty() && duplicationOBJCheck(nickName, CheckList.NICKNAME))
 		{
 			System.out.println("같은 닉네임 존재하넹ㅎㅎ;");
 			return;
@@ -183,35 +207,66 @@ import com.kh.webpage.model.User;
 	public void updateProfile(int menuNum) {
 		switch(menuNum)
 		{
-		case 1:
-			
+		case 1:	//비번
+			System.out.print("비밀번호 입력 하세요(특문포함) > ");
+			String pass = sc.nextLine();
+			if(checkSW(pass))
+			{
+				getUser().setPassword(pass);
+				System.out.println("비번 변경완료");
+			}
+			else
+				System.out.println("특수문자가 없거나 불가능한 비밀번호입니다.");
 			break;
-		case 2:
 			
+		case 2:	// 폰변경
+			System.out.print("핸드폰번호를 입력 하세요 > ");
+			String phone = sc.nextLine();
+			if(duplicationOBJCheck(phone, CheckList.PHONE))
+			{
+				System.out.println("중복되는 핸드폰이 있는디?");
+				return;
+			}
+			getUser().setPhone(phone);
+			System.out.println("폰번호 변경완료");
 			break;
-		case 3:
 			
+		case 3:	//닉네임
+			System.out.print("닉네임 입력 하세요 > ");
+			String nickName = sc.nextLine();
+			if(duplicationOBJCheck(nickName, CheckList.NICKNAME))
+			{
+				System.out.println("중복되는 닉네임이 있는디?");
+				return;
+			}
+			getUser().setNickName(nickName);
 			break;
-		case 4:
 			
+		case 4:	// 메일
+			System.out.print("메일을 입력 하세요 > ");
+			String email = sc.nextLine();
+			if(duplicationOBJCheck(email, CheckList.EMAIL))
+			{
+				System.out.println("중복되는 E-mail이 있는디?");
+				return;
+			}
+			getUser().setNickName(email);
 			break;
+			
 		case 99:
 			
-			break;			
+			return;			
 		}
-		
-		
 	}
 
 	// 계정 삭제
 	public boolean deleteProfile() {
-		
-		return false;
+		users.remove(getUser().getId());
+		return true;
 	}
 
 	
-	// 필요한 함수들..
-	
+	// 필요한 함수들..	
 	public boolean checkSW(String str)
 	{
 		
@@ -240,8 +295,6 @@ import com.kh.webpage.model.User;
 
 	public void fileSave(User user) 
 	{	
-		
-		
 		try
 		{
 			oos = new ObjectOutputStream(new FileOutputStream(fileName, true));
